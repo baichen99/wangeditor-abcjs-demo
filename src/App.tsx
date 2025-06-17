@@ -19,6 +19,7 @@ function App() {
       Boot.registerMenu({ key: 'insert-abc', factory: () => menu })
       menuRegistered.current = true
     }
+
   }, [])
 
   const insertAbc = (html: string) => {

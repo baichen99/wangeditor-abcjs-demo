@@ -34,6 +34,7 @@ export default function AbcModal({ show, onClose, onInsert, text, setText }: Abc
       const imgHtml = `<img src="data:image/svg+xml;base64,${base64}" />`
       onInsert(imgHtml)
     }
+
     onClose()
   }
 
