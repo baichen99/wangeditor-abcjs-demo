@@ -1,5 +1,5 @@
-import AbcEditor from './components/AbcEditor'
+import AbcEditor from "./components/AbcEditor";
 
 export default function App() {
-  return <AbcEditor />
+  return <AbcEditor />;
 }

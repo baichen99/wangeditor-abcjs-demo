@@ -1,6 +1,6 @@
-# ABCJS editor demo
+# wangeditor abcjs demo
 
-This demo uses a simple `contenteditable` element so you can mix normal text with music rendered by [abcjs](https://abcjs.net/). Click **Insert ABC** to open a modal with an input area and live preview. After inserting, the notation is added as an inline SVG image. Use **Export HTML** to download the current contents of the editor.
+This project demonstrates how to add an **ABC notation** button to [wangEditor](https://www.wangeditor.com/) using React and TypeScript. Clicking the button opens a dialog where you can type ABC notation on the left and preview it rendered by [abcjs](https://abcjs.net/) on the right. When you click **Insert**, the notation is converted to an inline SVG image and inserted into the editor at full width.
 
 ## Development
 
