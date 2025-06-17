@@ -5,6 +5,7 @@ interface AbcModalProps {
   show: boolean
   onClose: () => void
   onInsert: (src: string) => void
+
   text: string
   setText: (t: string) => void
 }
@@ -34,6 +35,7 @@ export default function AbcModal({ show, onClose, onInsert, text, setText }: Abc
       const src = `data:image/svg+xml,${encoded}`
       onInsert(src)
     }
+
     onClose()
   }
 

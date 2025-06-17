@@ -22,6 +22,7 @@ function App() {
     },
   }
 
+
   useEffect(() => {
     if (!menuRegistered.current) {
       const menu = new AbcMenu(() => setShowModal(true))
@@ -35,6 +36,7 @@ function App() {
       const imageNode = { type: 'image', src } as any
       editor.insertNode(imageNode)
       editor.focus(true)
+
     }
   }
 
@@ -43,6 +45,7 @@ function App() {
       <Toolbar editor={editor} defaultConfig={{ insertKeys: { index: 0, keys: ['insert-abc'] } }} />
       <Editor
         defaultConfig={editorConfig}
+
         style={{ height: '300px', overflowY: 'hidden' }}
         value=""
         onCreated={setEditor}
