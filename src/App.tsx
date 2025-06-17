@@ -13,18 +13,30 @@ function App() {
 
   const menuRegistered = useRef(false)
 
+  const editorConfig = {
+    placeholder: 'Type here...',
+    MENU_CONF: {
+      insertImage: {
+        checkImage: () => true,
+      },
+    },
+  }
+
+
   useEffect(() => {
     if (!menuRegistered.current) {
       const menu = new AbcMenu(() => setShowModal(true))
       Boot.registerMenu({ key: 'insert-abc', factory: () => menu })
       menuRegistered.current = true
     }
-
   }, [])
 
-  const insertAbc = (html: string) => {
+  const insertAbc = (src: string) => {
     if (editor) {
-      editor.dangerouslyInsertHtml(html)
+      const imageNode = { type: 'image', src } as any
+      editor.insertNode(imageNode)
+      editor.focus(true)
+
     }
   }
 
@@ -32,7 +44,8 @@ function App() {
     <div style={{ border: '1px solid #ccc', padding: 10 }}>
       <Toolbar editor={editor} defaultConfig={{ insertKeys: { index: 0, keys: ['insert-abc'] } }} />
       <Editor
-        defaultConfig={{ placeholder: 'Type here...' }}
+        defaultConfig={editorConfig}
+
         style={{ height: '300px', overflowY: 'hidden' }}
         value=""
         onCreated={setEditor}

@@ -4,7 +4,8 @@ import abcjs from 'abcjs'
 interface AbcModalProps {
   show: boolean
   onClose: () => void
-  onInsert: (html: string) => void
+  onInsert: (src: string) => void
+
   text: string
   setText: (t: string) => void
 }
@@ -30,9 +31,9 @@ export default function AbcModal({ show, onClose, onInsert, text, setText }: Abc
     if (svg) {
       const serializer = new XMLSerializer()
       const svgStr = serializer.serializeToString(svg)
-      const base64 = window.btoa(unescape(encodeURIComponent(svgStr)))
-      const imgHtml = `<img src="data:image/svg+xml;base64,${base64}" />`
-      onInsert(imgHtml)
+      const encoded = encodeURIComponent(svgStr)
+      const src = `data:image/svg+xml,${encoded}`
+      onInsert(src)
     }
 
     onClose()
