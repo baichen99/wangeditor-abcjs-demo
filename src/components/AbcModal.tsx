@@ -5,6 +5,7 @@ interface AbcModalProps {
   show: boolean
   onClose: () => void
   onInsert: (src: string) => void
+
   text: string
   setText: (t: string) => void
 }
@@ -17,6 +18,7 @@ export default function AbcModal({ show, onClose, onInsert, text, setText }: Abc
       previewRef.current.innerHTML = ''
       if (text.trim()) {
         abcjs.renderAbc(previewRef.current, text, { responsive: 'resize' })
+
       }
     }
   }, [text, show])
@@ -26,6 +28,7 @@ export default function AbcModal({ show, onClose, onInsert, text, setText }: Abc
   const handleInsert = () => {
     const temp = document.createElement('div')
     abcjs.renderAbc(temp, text, { responsive: 'resize' })
+
     const svg = temp.querySelector('svg')
     if (svg) {
       const serializer = new XMLSerializer()
@@ -34,6 +37,7 @@ export default function AbcModal({ show, onClose, onInsert, text, setText }: Abc
       const src = `data:image/svg+xml,${encoded}`
       onInsert(src)
     }
+
     onClose()
   }
 
