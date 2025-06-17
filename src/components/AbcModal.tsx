@@ -17,7 +17,8 @@ export default function AbcModal({ show, onClose, onInsert, text, setText }: Abc
     if (previewRef.current) {
       previewRef.current.innerHTML = ''
       if (text.trim()) {
-        abcjs.renderAbc(previewRef.current, text)
+        abcjs.renderAbc(previewRef.current, text, { responsive: 'resize' })
+
       }
     }
   }, [text, show])
@@ -26,7 +27,8 @@ export default function AbcModal({ show, onClose, onInsert, text, setText }: Abc
 
   const handleInsert = () => {
     const temp = document.createElement('div')
-    abcjs.renderAbc(temp, text)
+    abcjs.renderAbc(temp, text, { responsive: 'resize' })
+
     const svg = temp.querySelector('svg')
     if (svg) {
       const serializer = new XMLSerializer()
