@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Boot } from '@wangeditor/editor'
 import type { IDomEditor } from '@wangeditor/editor'
 import { Editor, Toolbar } from '@wangeditor/editor-for-react'
@@ -11,15 +11,9 @@ function App() {
   const [showModal, setShowModal] = useState(false)
   const [abcText, setAbcText] = useState('')
 
-  const menuRegistered = useRef(false)
-
   useEffect(() => {
-    if (!menuRegistered.current) {
-      const menu = new AbcMenu(() => setShowModal(true))
-      Boot.registerMenu({ key: 'insert-abc', factory: () => menu })
-      menuRegistered.current = true
-    }
-
+    const menu = new AbcMenu(() => setShowModal(true))
+    Boot.registerMenu({ key: 'insert-abc', factory: () => menu })
   }, [])
 
   const insertAbc = (html: string) => {

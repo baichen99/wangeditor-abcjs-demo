@@ -26,15 +26,7 @@ export default function AbcModal({ show, onClose, onInsert, text, setText }: Abc
   const handleInsert = () => {
     const temp = document.createElement('div')
     abcjs.renderAbc(temp, text)
-    const svg = temp.querySelector('svg')
-    if (svg) {
-      const serializer = new XMLSerializer()
-      const svgStr = serializer.serializeToString(svg)
-      const base64 = window.btoa(unescape(encodeURIComponent(svgStr)))
-      const imgHtml = `<img src="data:image/svg+xml;base64,${base64}" />`
-      onInsert(imgHtml)
-    }
-
+    onInsert(temp.innerHTML)
     onClose()
   }
 
