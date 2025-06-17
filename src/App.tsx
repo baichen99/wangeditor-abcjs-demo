@@ -13,6 +13,15 @@ function App() {
 
   const menuRegistered = useRef(false)
 
+  const editorConfig = {
+    placeholder: 'Type here...',
+    MENU_CONF: {
+      insertImage: {
+        checkImage: () => true,
+      },
+    },
+  }
+
   useEffect(() => {
     if (!menuRegistered.current) {
       const menu = new AbcMenu(() => setShowModal(true))
@@ -20,9 +29,11 @@ function App() {
       menuRegistered.current = true
     }
 
-  }, [])
-
-  const insertAbc = (html: string) => {
+  const insertAbc = (src: string) => {
+      const imageNode = { type: 'image', src } as any
+      editor.insertNode(imageNode)
+      editor.focus(true)
+        defaultConfig={editorConfig}
     if (editor) {
       editor.dangerouslyInsertHtml(html)
     }
