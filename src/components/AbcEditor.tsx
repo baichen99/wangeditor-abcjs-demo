@@ -1,54 +1,42 @@
-import { useEffect, useRef, useState } from 'react'
-import { Boot } from '@wangeditor/editor'
-import { Editor, Toolbar } from '@wangeditor/editor-for-react'
-import type { IDomEditor } from '@wangeditor/editor'
-import AbcModal from './AbcModal'
-import { AbcMenu } from './AbcMenu'
+import { useRef, useState } from "react";
+import AbcModal from "./AbcModal";
 
 export default function AbcEditor() {
-  const [editor, setEditor] = useState<IDomEditor | null>(null)
-  const [showModal, setShowModal] = useState(false)
-  const [abcText, setAbcText] = useState('')
-  const menuRegistered = useRef(false)
-
-  const editorConfig = {
-    placeholder: 'Type here...',
-    MENU_CONF: {
-      insertImage: {
-        checkImage: () => true,
-      },
-    },
-  }
-
-  useEffect(() => {
-    if (!menuRegistered.current) {
-      const menu = new AbcMenu(() => setShowModal(true))
-      Boot.registerMenu({ key: 'insert-abc', factory: () => menu })
-      menuRegistered.current = true
-    }
-  }, [])
+  const editorRef = useRef<HTMLDivElement>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [abcText, setAbcText] = useState("");
 
   const insertAbc = (src: string) => {
-    if (editor) {
-      const imageNode = {
-        type: 'image',
-        src,
-        style: { width: '100%' },
-        children: [{ text: '' }],
-      } as any
-      editor.insertNode(imageNode)
-      editor.focus(true)
+    const img = `<img src="${src}" style="width:100%"/>`;
+    editorRef.current?.focus();
+    document.execCommand("insertHTML", false, img);
+  };
+
+  const exportHtml = () => {
+    if (editorRef.current) {
+      const html = editorRef.current.innerHTML;
+      const blob = new Blob([html], { type: "text/html" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "content.html";
+      a.click();
+      URL.revokeObjectURL(url);
     }
-  }
+  };
 
   return (
-    <div style={{ border: '1px solid #ccc', padding: 10 }}>
-      <Toolbar editor={editor} defaultConfig={{ insertKeys: { index: 0, keys: ['insert-abc'] } }} />
-      <Editor
-        defaultConfig={editorConfig}
-        style={{ height: '300px', overflowY: 'hidden' }}
-        value=""
-        onCreated={setEditor}
+    <div>
+      <div style={{ marginBottom: 10 }}>
+        <button onClick={() => setShowModal(true)}>Insert ABC</button>
+        <button onClick={exportHtml} style={{ marginLeft: 10 }}>
+          Export HTML
+        </button>
+      </div>
+      <div
+        ref={editorRef}
+        contentEditable
+        style={{ border: "1px solid #ccc", minHeight: 200, padding: 8 }}
       />
       <AbcModal
         show={showModal}
@@ -58,5 +46,5 @@ export default function AbcEditor() {
         setText={setAbcText}
       />
     </div>
-  )
+  );
 }
